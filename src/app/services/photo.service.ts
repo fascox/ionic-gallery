@@ -5,10 +5,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
   providedIn: 'root'
 })
 export class PhotoService {
-
   public photos: Photo[] = [];
 
-  constructor(private camera: Camera,) { }
+  constructor(private camera: Camera) {}
 
   takePicture() {
     const options: CameraOptions = {
@@ -18,14 +17,16 @@ export class PhotoService {
       mediaType: this.camera.MediaType.PICTURE
     };
 
-    this.camera.getPicture(options).then((imageData) => {
-      this.photos.unshift({ data: 'data:image/jpeg;base64,' + imageData});
-    }, (err) => {
-      // Handle error
-      console.log("Camera issue:" + err);
-    });
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.photos.unshift({ data: 'data:image/jpeg;base64,' + imageData });
+      },
+      err => {
+        // Handle error
+        console.log('Camera issue:' + err);
+      }
+    );
   }
-
 }
 
 class Photo {
